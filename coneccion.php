@@ -1,3 +1,5 @@
+<?php
+
 if(isset($_GET['usuario']) && intval($_GET['usuario'])) {
     if(isset($_GET['contra']) && intval($_GET['contra'])) {
     	$format = strtolower($_GET['format']) == 'json' ? 'json' : 'xml'; //xml  default
@@ -5,11 +7,11 @@ if(isset($_GET['usuario']) && intval($_GET['usuario'])) {
 		$contrasena = intval($_GET['contra']); //no default
 
 		/* se conecta a la base de datos */
-		$link = mysql_connect('localhost','username','password') or die('No se puede conectar a la base de datos');
+		$link = mysql_connect('localhost','root','') or die('No se puede conectar a la base de datos');
 		mysql_select_db('db_name',$link) or die('No se encuentra la tabla en la base de datos');
 
 		/* query de coneccion de usuario */
-		$query = "SELECT count(*) FROM usuarios WHERE correo = $correo_usuario AND contrasena = $contrasena";
+		$query = "SELECT count(*) FROM usuarios WHERE correo = ".$correo_usuario." AND contrasena = ".$contrasena."";
 		$result = mysql_query($query,$link) or die('Query erroneo:  '.$query);
 
 		/* create one master array of the records */
@@ -47,7 +49,10 @@ if(isset($_GET['usuario']) && intval($_GET['usuario'])) {
 	/* disconnect from the db */
 	@mysql_close($link);
 
-		
+
     }
 
  }   
+
+ ?>
+http://localhost/coneccion.php?usuario=areli&contra=123
